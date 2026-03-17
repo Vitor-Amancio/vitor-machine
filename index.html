@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vitor Machine</title>
+    <style>
+        body {
+            background-color: #ccffcc;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #33aa33;
+            font-size: 2.5em;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #33aa33;
+            margin-top: 10px;
+        }
+
+        h3 {
+            color: #555;
+            margin-bottom: 5px;
+            margin-top: 15px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px auto;
+            max-width: 500px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"] {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            width: 250px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #33aa33;
+        }
+
+        select {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            cursor: pointer;
+            background-color: white;
+            transition: border-color 0.3s;
+        }
+
+        select:focus {
+            border-color: #33aa33;
+        }
+
+        button {
+            padding: 10px 30px;
+            font-size: 16px;
+            background-color: #33aa33;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: #228822;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        #resultado_soma {
+            background-color: #f5fff5;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 15px;
+        }
+
+        #resultado_soma p {
+            margin: 5px 0;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px solid #aaffaa;
+            margin: 25px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h1>Vitor Machine</h1>
+
+        <div class="card">
+            <h2>Conversor de Bases</h2>
+
+            <h3>Binário:</h3>
+            <input id="ipt_binario" type="text" placeholder="Ex: 101010" oninput="converterDoBinario()">
+
+            <h3>Octal:</h3>
+            <input id="ipt_octal" type="text" placeholder="Ex: 52" oninput="converterDoOctal()">
+
+            <h3>Decimal:</h3>
+            <input id="ipt_decimal" type="text" placeholder="Ex: 42" oninput="converterDoDecimal()">
+
+            <h3>Hexadecimal:</h3>
+            <input id="ipt_hexadecimal" type="text" placeholder="Ex: 2A" oninput="converterDoHexadecimal()">
+        </div>
+
+        <div class="card">
+            <h2>Soma entre bases</h2>
+
+            <h3>Primeiro número:</h3>
+            <input id="ipt_soma1" type="text" placeholder="Ex: 1010">
+            <select id="base_soma1">
+                <option value="2">Binário</option>
+                <option value="8">Octal</option>
+                <option value="10" selected>Decimal</option>
+                <option value="16">Hexadecimal</option>
+            </select>
+
+            <h3>Segundo número:</h3>
+            <input id="ipt_soma2" type="text" placeholder="Ex: FF">
+            <select id="base_soma2">
+                <option value="2">Binário</option>
+                <option value="8">Octal</option>
+                <option value="10" selected>Decimal</option>
+                <option value="16">Hexadecimal</option>
+            </select>
+
+            <br><br>
+            <button onclick="somar()">Somar</button>
+
+            <div id="resultado_soma"></div>
+        </div>
+    </center>
+
+    <script>
+        function converterDoBinario() {
+            let valor = ipt_binario.value;
+            let decimal = parseInt(valor, 2);
+
+            if (isNaN(decimal)) {
+                ipt_octal.value = "";
+                ipt_decimal.value = "";
+                ipt_hexadecimal.value = "";
+                return;
+            }
+
+            ipt_octal.value = decimal.toString(8);
+            ipt_decimal.value = decimal.toString(10);
+            ipt_hexadecimal.value = decimal.toString(16).toUpperCase();
+        }
+
+        function converterDoOctal() {
+            let valor = ipt_octal.value;
+            let decimal = parseInt(valor, 8);
+
+            if (isNaN(decimal)) {
+                ipt_binario.value = "";
+                ipt_decimal.value = "";
+                ipt_hexadecimal.value = "";
+                return;
+            }
+
+            ipt_binario.value = decimal.toString(2);
+            ipt_decimal.value = decimal.toString(10);
+            ipt_hexadecimal.value = decimal.toString(16).toUpperCase();
+        }
+
+        function converterDoDecimal() {
+            let valor = ipt_decimal.value;
+            let decimal = parseInt(valor, 10);
+
+            if (isNaN(decimal)) {
+                ipt_binario.value = "";
+                ipt_octal.value = "";
+                ipt_hexadecimal.value = "";
+                return;
+            }
+
+            ipt_binario.value = decimal.toString(2);
+            ipt_octal.value = decimal.toString(8);
+            ipt_hexadecimal.value = decimal.toString(16).toUpperCase();
+        }
+
+        function converterDoHexadecimal() {
+            let valor = ipt_hexadecimal.value;
+            let decimal = parseInt(valor, 16);
+
+            if (isNaN(decimal)) {
+                ipt_binario.value = "";
+                ipt_octal.value = "";
+                ipt_decimal.value = "";
+                return;
+            }
+
+            ipt_binario.value = decimal.toString(2);
+            ipt_octal.value = decimal.toString(8);
+            ipt_decimal.value = decimal.toString(10);
+        }
+
+        function somar() {
+            let valor1 = ipt_soma1.value;
+            let valor2 = ipt_soma2.value;
+            let base1 = Number(base_soma1.value);
+            let base2 = Number(base_soma2.value);
+
+            let decimal1 = parseInt(valor1, base1);
+            let decimal2 = parseInt(valor2, base2);
+
+            if (isNaN(decimal1)) {
+                alert("O primeiro número é inválido para a base selecionada!");
+                return;
+            }
+
+            if (isNaN(decimal2)) {
+                alert("O segundo número é inválido para a base selecionada!");
+                return;
+            }
+
+            let soma = decimal1 + decimal2;
+
+            resultado_soma.innerHTML = `
+                <h3>Resultado da soma:</h3>
+                <p><b>Binário:</b> ${soma.toString(2)}</p>
+                <p><b>Octal:</b> ${soma.toString(8)}</p>
+                <p><b>Decimal:</b> ${soma.toString(10)}</p>
+                <p><b>Hexadecimal:</b> ${soma.toString(16).toUpperCase()}</p>
+            `;
+        }
+    </script>
+</body>
+
+</html>
